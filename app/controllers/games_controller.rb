@@ -1,13 +1,13 @@
 class GamesController < ApplicationController
 	def new
     # Use the authenticate method called authenticate! which was defined in the app controller to authenticate. Straight foward right?
-        authenticate!
-    end
+    authenticate!
+  end
 	
-	
+	def show 
+	end
 	
 	def index
-        @msg="index"
 	end
 	
 	def edit
@@ -29,7 +29,5 @@ class GamesController < ApplicationController
 	def destroy
 	end
 	
-    def show 
-	end
 	
 end
