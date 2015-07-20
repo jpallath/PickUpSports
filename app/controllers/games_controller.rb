@@ -7,7 +7,6 @@ class GamesController < ApplicationController
 	
 	
 	def index
-        @msg="index"
 	end
 	
 	def edit
