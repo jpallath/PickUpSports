@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'games#index'
+    root to: 'games#index'
 	resources :games
 	resources :users
 	resource :sessions, only: [:new, :create, :destroy]
