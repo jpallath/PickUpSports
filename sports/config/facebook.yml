@@ -1,7 +1,0 @@
-development:
-  app_id: <%= ENV['DEVISE_FB_API'] %>
-  secret: <%= ENV['DEVISE_FB_SECRET '] %>
-
-production:
-  app_id: <%= ENV['DEVISE_FB_API'] %>
-  secret: <%= ENV['DEVISE_FB_SECRET '] %>
