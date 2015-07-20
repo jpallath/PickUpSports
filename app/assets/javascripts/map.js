@@ -92,8 +92,7 @@ function initialize() {
         center: new google.maps.LatLng(40.7127, -74.0059),
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        draggableCursor: 'default',
-        scrollwheel: false,
+        draggableCursor: 'default'
     }
     //Make the map & the geocoder!
     var map = new google.maps.Map(mapCanvas, mapOptions)
@@ -128,13 +127,28 @@ function initialize() {
     //Click & LongClick
     google.maps.event.addListener(map, 'click', function(event){
         var move = false;
+//        google.maps.event.addListener(map, 'mousemove', function(event) {
+//            move = true;
+//            console.log(event);
+//        });
 
+        setTimeout(function() {
         if (mapClicked && markerFlag) {
+//            //console.log("Hello, World.");
+//            var marker = new google.maps.Marker({
+//            position: event.latLng,
+//            title: "Hello world!"
+//        });
+//
+//
+//        markers.push(marker);
+//        markers[0].setMap(map);
+//        markerFlag = false;
             deleteMarkers(map);
             addMarker(event.latLng, map, geocoder);
             showMarkers(map);
         }
-  
+    }, 1750);
     });
 
     //Double Click
