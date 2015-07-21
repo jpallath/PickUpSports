@@ -1,6 +1,6 @@
 //********************Marker show and hide Methods********************//
 
- var geocoder = new google.maps.Geocoder();
+//Games
 
 // Add a marker to the map and push to the array.
 function addMarker(location, map, geocoder) {
@@ -69,6 +69,7 @@ function reverseCodeLatLng(position, map, geocoder) {
 //    var input = document.getElementById('latlng').value;
 //    var latlngStr = input.split(',', 2);
 //    var latlng = new google.maps.LatLng(latlngStr[0], latlngStr[1]);
+	 var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'location': position}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             if (results[1]) {
@@ -152,7 +153,7 @@ function initialize() {
             addMarker(event.latLng, map, geocoder);
             showMarkers(map);
         }
-
+  
     });
 
     //Double Click
@@ -165,7 +166,7 @@ function initialize() {
     //*******************END EVENT LISTENERS*******************//
 
     //TO grey out boxes, just don't turn on event listeners until Sport, Date and Time are filled
-	console.log("initialized")
+	console.log("initialized mapgames")
 }
 
 

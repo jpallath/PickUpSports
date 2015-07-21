@@ -1,25 +1,30 @@
 //********************Marker show and hide Methods********************//
 
-//Map!
+//Mapcreate
 
 // Add a marker to the map and push to the array.
-function addMarker(location, map, geocoder) {
+function addMarker(location, map, geocoder, pinToAddress) {
+	//On click, pinToAddress is true 
+	deleteMarkers(map)
     var marker = new google.maps.Marker({
         position: location,
         map: map,
         draggable:true
   });
-    google.maps.event.addListener(marker, 'click', function(event){
-        console.log("click listener on marker added");
-        console.log(marker.position);
-        reverseCodeLatLng(marker.position, map, geocoder);
-
-     });
-    google.maps.event.addListener(marker, 'rightclick', function(){
-        console.log("rightclick listener on marker added!");
-
-    });
+//    google.maps.event.addListener(marker, 'click', function(event){
+//        console.log("click listener on marker added");
+//        console.log(marker.position);
+//        reverseCodeLatLng(marker.position, map, geocoder);
+//
+//     });
+//    google.maps.event.addListener(marker, 'rightclick', function(){
+//        console.log("rightclick listener on marker added!");
+//
+//    });
     markers.push(marker);
+	if(pinToAddress){
+		reverseCodeLatLng(marker.position, map);
+	}
 }
 
 // Sets the map on all markers in the array.
@@ -48,25 +53,22 @@ function deleteMarkers(map) {
 //********************Marker show and hide Methods********************//
 
 //******************** Geocoding ********************//
-function codeAddress(address) {
-//  var address = document.getElementById('address').value;
+function addressToPin(address, map) {
 	var geocoder = new google.maps.Geocoder();
-  geocoder.geocode( { 'address': address}, function(results, status) {
+  var thing = geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-			console.log("results:")
-				console.log(results[0].geometry.location);
-//      map.setCenter(results[0].geometry.location);
-//      var marker = new google.maps.Marker({
-//          map: map,
-//          position: results[0].geometry.location
-//      });
-    } else {
+			console.log(results[0].geometry.location);
+			addMarker(results[0].geometry.location, map, geocoder, false)
+		
+    } 
+		else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
-  });
+  })
+	return thing;
 }
 
-function reverseCodeLatLng(position, map, geocoder) {
+function reverseCodeLatLng(position, map) {
 //    var input = document.getElementById('latlng').value;
 //    var latlngStr = input.split(',', 2);
 //    var latlng = new google.maps.LatLng(latlngStr[0], latlngStr[1]);
@@ -74,9 +76,16 @@ function reverseCodeLatLng(position, map, geocoder) {
     geocoder.geocode({'location': position}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             if (results[1]) {
-                console.log(results);
-                console.log(results[1]);
-                console.log(results[1].formatted_address);
+//                console.log(results);
+                console.log(results[0].formatted_address);
+							var formattedResult = results[0].formatted_address;
+								addressArray = formattedResult.split(",");
+							console.log(addressArray);
+							$('#address').val(addressArray[0])
+							$('#city').val(addressArray[1])
+							$('#state').val(addressArray[2])
+//							console.log(results[3]);
+//                console.log(results[1].formatted_address);
 //                map.setZoom(11);
 //                marker = new google.maps.Marker({
 //                    position: latlng,
@@ -117,8 +126,8 @@ function initialize() {
     }
     //Make the map & the geocoder!
     var map = new google.maps.Map(mapCanvas, mapOptions)
-    var geocoder = new google.maps.Geocoder();
-
+		var geocoder = new google.maps.Geocoder();
+ 
 
     //*******************EVENT LISTENERS*******************//
 
@@ -151,7 +160,7 @@ function initialize() {
 
         if (mapClicked && markerFlag) {
             deleteMarkers(map);
-            addMarker(event.latLng, map, geocoder);
+            addMarker(event.latLng, map, geocoder, true);
             showMarkers(map);
         }
   
@@ -162,12 +171,18 @@ function initialize() {
     google.maps.event.addListener(map, 'dblclick', function() {
         doubleclick = true;
     });
-
+	
+	//Display button
+	$( "#display" ).click(function() {
+		var address = $('#address').val()+", "+$('#city').val()+", "+$('#state').val()
+  	console.log("clicked");
+		addressToPin(address, map)
+});
 
     //*******************END EVENT LISTENERS*******************//
 
     //TO grey out boxes, just don't turn on event listeners until Sport, Date and Time are filled
-	console.log("initialized map")
+	console.log("initialized mapcreateJS Map")
 }
 
 

@@ -4,15 +4,15 @@
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUNY0CfcYkzq9dihhJ_qKOEfyMDUdUKzo ">
     </script>
-<%= javascript_include_tag 'map'%>
+	<%= javascript_include_tag 'mapcreate'%>
   </head>
 
 <div id="map-canvas" class="map"></div>
  <div class="create-box container left">
   <form action="/games" method="post" class="create-form col s6 blue-grey lighten-5">
-    <input  type="hidden"
-                       name="authenticity_token"
-                       value="<%= form_authenticity_token %>">
+    <input type="hidden"
+        name="authenticity_token"
+        value="<%= form_authenticity_token %>">
     <div class="divider"></div>
       <input name="game[type_of]" value="Baseball" type="radio" id="baseball-box" />
       <label for="baseball-box">Baseball</label>
@@ -24,8 +24,8 @@
       <label for="soccer-box">Soccer</label>
     <div class="divider"></div>
       <div class="input-field col s6">
-        <input type="time" name="game[gametime]" class="timepicker">
-        <input type="date" name="game[gamedate]" class="datepicker">
+        <input type="time" name="game[time]" class="timepicker">
+        <input type="date" name="game[date]" class="datepicker">
         <div class="input-field col s6">
           <input id="max_players" name="game[max_players]" type="number" min="2" max="18" class="validate">
           <label for="max_players">Max # of Players</label>
@@ -39,17 +39,14 @@
           <textarea id="game_d" name="game[description]" class="materialize-textarea" length="120"></textarea>
           <label for="game_d">Game Description</label>
     </div>
-        <div class="input-field col s6">
-          <i class="material-icons prefix">search</i>
-          <input placeholder="Street Address"id="icon_prefix" id="address" name="game[address]" type="text" class="validate">
-          <label for="icon_prefix">Address</label>
+        <div class="location input-field col s6">
+          <input placeholder="Street Address" id="address" name="game[address]" type="text" class="validate">
+          <label class="active" for="address">Location</label>
           <input placeholder="City"id="city" name="game[city]" type="text" class="validate">
           <input placeholder="State" id="state" name="game[state]" type="text" class="validate">
-					<input type="hidden" name="game[longitude]" value="90">
-					<input type="hidden" name="game[latitude]" value="90">
+          <a class="pin btn-floating waves-effect waves-light red" id="display"><i class="material-icons">room</i></a>
     </div>
     <a class="waves-effect waves-red btn grey darken-1">CANCEL</a>
-		<input type="submit" name="submit" value="submitted">
-    <!-- <a  class="waves-effect waves-light btn teal lighten-2"><input type="submit" value="submitted">READY TO PLAY!</a> -->
+    <a class="waves-effect waves-light btn teal lighten-2" type="submit" value="Submit">READY TO PLAY!</a>
   </form>
 </div>
