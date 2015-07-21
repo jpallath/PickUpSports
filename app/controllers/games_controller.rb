@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
+    before_action :authenticate!, except: [:show, :index]
+
     def new
-    # Use the authenticate method called authenticate! which was defined in the app controller to authenticate. Straight foward right?
-        authenticate!
     end
 
 
@@ -10,17 +10,24 @@ class GamesController < ApplicationController
     end
 
     def edit
-    authenticate!
     end
 
     def create
-        authenticate!
-       thing = Game.new(name:params[:game][:name],type_of:params[:game][:type_of],location:params[:game][:location], gamedate:params[:game][:date], gametime:params[:game][:time], max_players:params[:game][:max_players])
-       thing.save
-			 puts(thing)
+      puts game_params
+      puts ("XXXXXXXXXXXXXXXXXXXXxxxxxxxxxxxxxxXXXXXXXXXXX")
+      puts session[:user_id]
+       @game = Game.new(game_params)
+       @game.creator_id = session[:user_id]
+       @game.save
        redirect_to "/games"
      end
 
+     private
+     def game_params
+       params.require(:game)
+             .permit(:name, :type_of, :location, :gamedate, :gametime, :max_players,
+             :description, :address, :city, :state, :longitude, :latitude)
+     end
 
     #here we grab the ID of the game we created and redirect them there. I haven't created anything in the DB yet
     #so it's hard to redirect properly. Right now it just goes to the generic show page. it should be game/:id

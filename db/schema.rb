@@ -38,9 +38,16 @@ ActiveRecord::Schema.define(version: 20150718164433) do
     t.string   "type_of"
     t.string   "name"
     t.string   "location"
+    t.string   "description"
+    t.string   "longitude"
+    t.string   "latitude"
     t.date     "gamedate"
     t.time     "gametime"
     t.integer  "max_players"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.integer  "creator_id", :limit => 8
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

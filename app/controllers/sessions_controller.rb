@@ -9,22 +9,29 @@ class SessionsController < ApplicationController
   # end
   def create
     auth_hash = request.env['omniauth.auth']
-    @authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
 
-      session[:user_id] = auth_hash[:uid]
+    @authorization = Authorization.find_by(
+      provider: auth_hash["provider"],
+      uid: auth_hash["uid"]
+    )
+
+    session[:user_id] = auth_hash[:uid]
+
     if @authorization
         redirect_to "/games"
     else
-        user = User.new :name => auth_hash["info"]["name"], :uid => auth_hash[:uid]
-      user.save
-      redirect_to "/users/new"
+      @user = User.find_or_initialize_by(uid: auth_hash[:uid])
+      @user.name = auth_hash["info"]["name"]
+      @user.save
+
+      redirect_to games_url
     end
   end
 
 
   def destroy
     session[:user_id] = nil
-      redirect_to "/games"
+    redirect_to "/games"
   end
 
 
