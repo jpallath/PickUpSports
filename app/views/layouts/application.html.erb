@@ -10,20 +10,41 @@
 
 </head>
 <body>
-
   <nav>
-     <div class="nav-wrapper">
+     <div class="nav-wrapper cyan darken-2">
        <a href="#!" class="brand-logo">Pick Up and Go</a>
        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
        <ul class="right hide-on-med-and-down">
-         <li><a href="sass.html">Find Games</a></li>
-         <li><a href="badges.html">Create Game</a></li>
-         <li><a href="collapsible.html">My Profile</a></li>
+         <li><a href="/games#index">Find Games</a></li>
+         <li><a href="/games/new">Create Game</a></li>
+         <% if session[:user_id]!=nil %>
+             <li><a href="/users/<%=session[:user_id]%>">My Profile</a></li>
+            <% end %>
+           <li><a href="<% if session[:user_id]==nil %>
+             /auth/facebook/
+            <% else %>
+              /signout
+            <% end %>"><% if session[:user_id]==nil %>
+             Login
+            <% else %>
+              Logout
+            <% end %></a></li>
        </ul>
        <ul class="side-nav" id="mobile-demo">
-         <li><a href="sass.html">Find Games</a></li>
-         <li><a href="badges.html">Create Game</a></li>
-         <li><a href="collapsible.html">My Profile</a></li>
+         <li><a href="/games#index">Find Games</a></li>
+         <li><a href="/games/new">Create Game</a></li>
+         <% if session[:user_id]!=nil %>
+             <li><a href="/users/<%=session[:user_id]%>">My Profile</a></li>
+            <% end %>
+           <li><a href="<% if session[:user_id]==nil %>
+             /auth/facebook/
+            <% else %>
+              /signout
+            <% end %>"><% if session[:user_id]==nil %>
+             Login
+            <% else %>
+              Logout
+            <% end %></a></li>
        </ul>
      </div>
    </nav>

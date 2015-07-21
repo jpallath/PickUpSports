@@ -1,11 +1,32 @@
-// Place all the styles related to the Games controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-
-html, body, #map-canvas { 
-  height: 100%; 
-  margin: 0; 
-  width: 100%; 
+html, body, #map-canvas {
+  height: 50%;
+  margin: 0;
+  width: 50%;
   padding: 0;
+}
+
+.filter-box {
+  .section {
+    padding: 1em;
+    margin: 1em;
+    position: fixed;
+    width: 39%;
+    top: 10%;
+    z-index: 5;
+  }
+}
+
+.create-box {
+  .create-form {
+    padding: 1em;
+    margin: 1em;
+    position: relative;
+    width: 50%;
+  }
+}
+
+form {
+  p {
+    display: inline-block;
+  }
 }

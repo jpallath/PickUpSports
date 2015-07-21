@@ -1,5 +1,7 @@
 //********************Marker show and hide Methods********************//
 
+ var geocoder = new google.maps.Geocoder();
+
 // Add a marker to the map and push to the array.
 function addMarker(location, map, geocoder) {
     var marker = new google.maps.Marker({
@@ -46,6 +48,22 @@ function deleteMarkers(map) {
 //********************Marker show and hide Methods********************//
 
 //******************** Geocoding ********************//
+function codeAddress(address) {
+//  var address = document.getElementById('address').value;
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+			console.log("results:")
+				console.log(results[0].geometry.location);
+//      map.setCenter(results[0].geometry.location);
+//      var marker = new google.maps.Marker({
+//          map: map,
+//          position: results[0].geometry.location
+//      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
 
 function reverseCodeLatLng(position, map, geocoder) {
 //    var input = document.getElementById('latlng').value;
@@ -134,7 +152,7 @@ function initialize() {
             addMarker(event.latLng, map, geocoder);
             showMarkers(map);
         }
-  
+
     });
 
     //Double Click
@@ -147,7 +165,7 @@ function initialize() {
     //*******************END EVENT LISTENERS*******************//
 
     //TO grey out boxes, just don't turn on event listeners until Sport, Date and Time are filled
-
+	console.log("initialized")
 }
 
 

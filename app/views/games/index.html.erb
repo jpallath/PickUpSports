@@ -9,21 +9,24 @@
 <%= javascript_include_tag 'map' , 'data-turbolinks-track' => true %>
   </head>
   <body>
-    <h1>Showing Games Put Map here!</h1>
+    <div class="filter-box container blue-grey lighten-5 left">
+    <div class="section cyan darken-2">
+      <h5 class="white-text">FILTER BY</h5>
+      <a class="waves-effect waves-light btn red darken-1">ACTIVE NOW</a>
+      <a class="waves-effect waves-light btn orange darken-1">COMING UP</a>
+    </div>
+  </div>
+
+  <div class="sort-box container"></div>
+
+<a href="#!" class="create waves-effect waves-circle waves-light btn-floating secondary-content">
+  <i class="material-icons">add</i>
+</a>
 
 
+<div id="map-canvas" class="map">
 
+</div>
 
-    <a href="/games/index">games/index</a>
-    <a href="/games/new">games/new</a>
-    <a href="/games/edit">edit/index</a>
-    <a href="/games/show">games/show</a>
-    <a href="/users/index">games/index</a>
-    <a href="/users/new">games/new</a>
-    <a href="/users/edit">games/edit</a>
-    <a href="/users/show">games/show</a>
-    <a href="/sessions/new">sessions/new</a>
-
-<div id="map-canvas"></div>
   </body>
 </html>

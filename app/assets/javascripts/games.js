@@ -1,9 +1,6 @@
-f# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
-
 //********************Marker show and hide Methods********************//
+
+ var geocoder = new google.maps.Geocoder();
 
 // Add a marker to the map and push to the array.
 function addMarker(location, map, geocoder) {
@@ -16,11 +13,11 @@ function addMarker(location, map, geocoder) {
         console.log("click listener on marker added");
         console.log(marker.position);
         reverseCodeLatLng(marker.position, map, geocoder);
-        
+
      });
     google.maps.event.addListener(marker, 'rightclick', function(){
         console.log("rightclick listener on marker added!");
-        
+
     });
     markers.push(marker);
 }
@@ -51,6 +48,22 @@ function deleteMarkers(map) {
 //********************Marker show and hide Methods********************//
 
 //******************** Geocoding ********************//
+function codeAddress(address) {
+//  var address = document.getElementById('address').value;
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+			console.log("results:")
+				console.log(results[0].geometry.location);
+//      map.setCenter(results[0].geometry.location);
+//      var marker = new google.maps.Marker({
+//          map: map,
+//          position: results[0].geometry.location
+//      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
 
 function reverseCodeLatLng(position, map, geocoder) {
 //    var input = document.getElementById('latlng').value;
@@ -70,11 +83,11 @@ function reverseCodeLatLng(position, map, geocoder) {
 //                infowindow.setContent(results[1].formatted_address);
 //                infowindow.open(map, marker);
 
-        } 
+        }
         else {
                 console.log('No results found');
             }
-        } 
+        }
         else {
             console.log('Geocoder failed due to: ' + status);
         }
@@ -88,7 +101,7 @@ var markers = [];
 
 //Initialize
 function initialize() {
-    
+
     //get map element
     var mapCanvas = document.getElementById('map-canvas');
     console.log(document);
@@ -97,7 +110,8 @@ function initialize() {
         center: new google.maps.LatLng(40.7127, -74.0059),
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        draggableCursor: 'default'
+        draggableCursor: 'default',
+        scrollwheel: false,
     }
     //Make the map & the geocoder!
     var map = new google.maps.Map(mapCanvas, mapOptions)
@@ -105,68 +119,53 @@ function initialize() {
 
 
     //*******************EVENT LISTENERS*******************//
-    
+
     var doubleclick = false;
     //
     var markerFlag = true;
-    
+
     //Used as a flag to seperate a long click from a drag
     var mapClicked = true;
-    
+
     //Drag Start
     google.maps.event.addListener(map, 'dragstart', function() {
         mapClicked = false;
     });
-    
+
     //Drag End
     google.maps.event.addListener(map, 'dragend', function() {
         mapClicked = true;
     });
-    
+
     //Zoom change
     google.maps.event.addListener(map, 'zoom_changed', function() {
         mapClicked = false;
     });
-    
-    
+
+
     //Click & LongClick
     google.maps.event.addListener(map, 'click', function(event){
         var move = false;
-//        google.maps.event.addListener(map, 'mousemove', function(event) {
-//            move = true;
-//            console.log(event);
-//        });
-        
-        setTimeout(function() {
+
         if (mapClicked && markerFlag) {
-//            //console.log("Hello, World.");
-//            var marker = new google.maps.Marker({
-//            position: event.latLng,
-//            title: "Hello world!"
-//        });
-//        
-//        
-//        markers.push(marker);
-//        markers[0].setMap(map);
-//        markerFlag = false;
             deleteMarkers(map);
             addMarker(event.latLng, map, geocoder);
             showMarkers(map);
         }
-    }, 1750);
+
     });
-    
+
     //Double Click
     //Zoom change
     google.maps.event.addListener(map, 'dblclick', function() {
         doubleclick = true;
     });
-    
-    
+
+
     //*******************END EVENT LISTENERS*******************//
 
     //TO grey out boxes, just don't turn on event listeners until Sport, Date and Time are filled
-    
+	console.log("initialized")
 }
 
 
@@ -185,6 +184,3 @@ google.maps.event.addDomListener(window, 'load', initialize);
 //custom what appears?
 //double click?
 //RIGHT CLICK PROBLEM
-
-
-

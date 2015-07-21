@@ -20,6 +20,7 @@ class UsersController < ApplicationController
 
 	def show
     authenticate!
+		@user = User.find_by(:uid => params[:uid])
 	end
 
 	def update
